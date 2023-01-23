@@ -27,8 +27,36 @@ class Array
         farr
     end
 
+    def my_any?(&block)
+        self.my_each do |el|
+            return true if block.call(el) 
+        end
+        return false
+    end
+
+    def my_all?(&block)
+        i = 0
+        self.my_each do |el|
+            if block.call(el) 
+                i += 1
+            end
+        end
+        if i == self.length 
+            return true
+        else
+            return false
+        end
+    end
+
 
 end
+
+a = [1, 2, 3]
+p a.my_any? { |num| num > 1 } # => true
+p a.my_any? { |num| num == 4 } # => false
+p a.my_all? { |num| num > 1 } # => false
+p a.my_all? { |num| num < 4 } # => true
+
 # a = [1, 2, 3]
 # p a.my_select { |num| num > 1 } # => [2, 3]
 # p a.my_select { |num| num == 4 } # => []
